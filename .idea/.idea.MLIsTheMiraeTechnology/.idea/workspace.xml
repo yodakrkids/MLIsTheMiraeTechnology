@@ -7,6 +7,10 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Ocean/CenterOfMassTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/dodgeBall/ZombieAgent.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -68,7 +72,18 @@
       <workItem from="1658890036445" duration="1000" />
       <workItem from="1658890149241" duration="895000" />
       <workItem from="1658899093538" duration="7018000" />
-      <workItem from="1658914298948" duration="1560000" />
+      <workItem from="1658914298948" duration="1791000" />
+      <workItem from="1658970425616" duration="4430000" />
+      <workItem from="1658980685882" duration="883000" />
+      <workItem from="1658986297774" duration="100000" />
+      <workItem from="1658986431298" duration="9000" />
+      <workItem from="1658986471957" duration="370000" />
+      <workItem from="1658986873559" duration="692000" />
+      <workItem from="1658987706563" duration="995000" />
+      <workItem from="1658988901372" duration="2114000" />
+      <workItem from="1658999934849" duration="777000" />
+      <workItem from="1659001920357" duration="10000" />
+      <workItem from="1659002111364" duration="9000" />
     </task>
     <servers />
   </component>

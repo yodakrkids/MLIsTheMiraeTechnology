@@ -9,10 +9,10 @@ using Random = UnityEngine.Random;
 
 public class RollerAgent : Agent
 {
-    private Rigidbody rigidbody;
+    private Rigidbody rbody;
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody>(); // Agent의 리지드바디를 참조
+        rbody = GetComponent<Rigidbody>(); // Agent의 리지드바디를 참조
     }
 
     public Transform Target; // Agent가 잡을 Target
@@ -24,8 +24,8 @@ public class RollerAgent : Agent
     {
         if (transform.localPosition.y < 0)
         {
-            rigidbody.angularVelocity = Vector3.zero;
-            rigidbody.velocity = Vector3.zero;
+            rbody.angularVelocity = Vector3.zero;
+            rbody.velocity = Vector3.zero;
             transform.localPosition = new Vector3(0, 0.5f, 0); 
         }
         Target.localPosition = new Vector3(Random.value * 8 - 4, 0.5f, Random.value * 8 - 4);
@@ -39,8 +39,8 @@ public class RollerAgent : Agent
         sensor.AddObservation(Target.localPosition); // target위치
         sensor.AddObservation(transform.localPosition); // 자신의 위치
         
-        sensor.AddObservation(rigidbody.velocity.x); // 자신의 속도
-        sensor.AddObservation(rigidbody.velocity.z); // 자신의 속도
+        sensor.AddObservation(rbody.velocity.x); // 자신의 속도
+        sensor.AddObservation(rbody.velocity.z); // 자신의 속도
     }
 
     public float forceMultiplier = 10;
@@ -52,11 +52,19 @@ public class RollerAgent : Agent
     /// <param name="actionBuffers"></param>
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        Vector3 controlSinal = Vector3.zero;
-        controlSinal.x = actionBuffers.ContinuousActions[0];
-        controlSinal.z = actionBuffers.ContinuousActions[1];
-        rigidbody.AddForce(controlSinal * forceMultiplier);
-        transform.LookAt(Target);
+        //Vector3 controlSinal = Vector3.zero;
+       // controlSinal.x = actionBuffers.ContinuousActions[0];
+        //controlSinal.z = actionBuffers.ContinuousActions[1];
+        //rbody.AddForce(controlSinal * forceMultiplier);
+        //transform.LookAt(Target);
+
+        float MoveX = actionBuffers.ContinuousActions[0];
+        float MoveZ = actionBuffers.ContinuousActions[1];
+
+        transform.rotation = Quaternion.LookRotation(Target.transform.position - transform.position).normalized;
+        transform.position += new Vector3(MoveX, 0, MoveZ) * Time.deltaTime * 1.5f;
+       // transform.LookAt(Target);
+        
         float distanceToTarget = Vector3.Distance(transform.localPosition, Target.localPosition);
             
         if (distanceToTarget < 1.42)
@@ -65,11 +73,11 @@ public class RollerAgent : Agent
             EndEpisode();
         }
 
-        // 플랫폼 밖으로 나가면 Episode 종료
-        if (transform.localPosition.y < 0)
-        {
-            EndEpisode();
-        }
+    //    // 플랫폼 밖으로 나가면 Episode 종료
+      //  if (transform.localPosition.y < 0)
+    //    {
+      //      EndEpisode();
+      //  }
         
     }
     
@@ -78,8 +86,8 @@ public class RollerAgent : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         //base.Heuristic(actionsOut);
-        ActionSegment<float> continuousActionsOut = actionsOut.ContinuousActions;
-        continuousActionsOut[0] = Input.GetAxis("Horizontal");
-        continuousActionsOut[1] = Input.GetAxis("Vertical");
+        ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
+        continuousActions[0] = Input.GetAxisRaw("Horizontal");
+        continuousActions[1] = Input.GetAxisRaw("Vertical");
     }
 }
