@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ball
+  - purpleAgent
+  - blueAgent
+  - wall
+  - blueGoal
+  - purpleGoal
+  - zombie
+  - target
+  - Tree
   layers:
   - Default
   - TransparentFX
